@@ -69,17 +69,18 @@ trait ResourceRouter
      */
     public function routeNameAlias(): string
     {
-        return (string) ($this->routAlias
+        return ($this->routAlias
             ?
-            Str::of($this->routAlias)
-                ->lcfirst()
-                ->squish()
+            lcfirst(
+                (string) Str::of($this->routAlias)->replace(['  ', '   '], [''])
+            )
             :
-            Str::of(static::class)
-                ->classBasename()
-                ->replace(['Resource'], '')
-                ->plural()
-                ->lcfirst());
+            lcfirst(
+                (string) Str::of(static::class)
+                    ->classBasename()
+                    ->replace(['Resource'], '')
+                    ->plural()
+            ));
     }
 
     public function routeParam(): string
