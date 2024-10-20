@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\Traits;
 
+use Illuminate\Support\Str;
+
 trait WithLabel
 {
     protected string $label = '';
@@ -16,10 +18,10 @@ trait WithLabel
     {
         if ($this->translatable) {
             return __(
-                str($this->label)->when(
+                Str::of($this->label)->when(
                     $this->translatableKey,
                     fn ($str) => $str->prepend($this->translatableKey . '.')
-                )->value()
+                )
             );
         }
 

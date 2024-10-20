@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use MoonShine\Exceptions\FieldException;
 use MoonShine\Helpers\Condition;
@@ -92,9 +93,8 @@ trait FileTrait
     {
         $dir = empty($this->getDir()) ? '' : $this->getDir() . '/';
 
-        return str($value)->remove($dir)
-            ->prepend($dir)
-            ->value();
+        return Str::of($value)->remove($dir)
+            ->prepend($dir);
     }
 
     /**

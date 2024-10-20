@@ -6,13 +6,14 @@ namespace MoonShine\Traits\Resource;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use MoonShine\MoonShineRouter;
 
 trait ResourceRouter
 {
     public function currentRoute(array $query = []): string
     {
-        return str(request()->url())
+        return Str::of(request()->url())
             ->when(
                 $query,
                 static fn ($str) => $str->append('?')
@@ -54,7 +55,7 @@ trait ResourceRouter
 
     public function routeName(?string $action = null): string
     {
-        return (string) str('moonshine')
+        return (string) Str::of('moonshine')
             ->append('.')
             ->append($this->routeNameAlias())
             ->when(
@@ -70,11 +71,11 @@ trait ResourceRouter
     {
         return (string) ($this->routAlias
             ?
-            str($this->routAlias)
+            Str::of($this->routAlias)
                 ->lcfirst()
                 ->squish()
             :
-            str(static::class)
+            Str::of(static::class)
                 ->classBasename()
                 ->replace(['Resource'], '')
                 ->plural()

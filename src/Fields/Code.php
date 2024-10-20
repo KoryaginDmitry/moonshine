@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Fields;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Code extends Textarea
 {
@@ -30,7 +31,7 @@ class Code extends Textarea
 
     public function indexViewValue(Model $item, bool $container = true): string
     {
-        return (string) str($item->{$this->field()})
+        return (string) Str::of($item->{$this->field()})
             ->before('<pre>')
             ->after('</pre>')
             ->stripTags();

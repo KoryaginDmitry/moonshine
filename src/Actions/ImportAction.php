@@ -7,6 +7,7 @@ namespace MoonShine\Actions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Exceptions\ActionException;
 use MoonShine\Fields\Field;
@@ -58,10 +59,12 @@ class ImportAction extends Action
 
         $requestFile = request()->file($this->inputName);
 
-        if (! in_array(
-            $requestFile->getClientOriginalExtension(),
-            ['csv', 'xlsx']
-        )) {
+        if (
+            ! in_array(
+                $requestFile->getClientOriginalExtension(),
+                ['csv', 'xlsx']
+            )
+        ) {
             MoonShineUI::toast(
                 __('moonshine::ui.resource.import.extension_not_supported'),
                 'error'
@@ -133,7 +136,7 @@ class ImportAction extends Action
     ): Collection {
         $fastExcel = new FastExcel();
 
-        if (str($path)->contains('.csv')) {
+        if (Str::of($path)->contains('.csv')) {
             $fastExcel->configureCsv($delimiter);
         }
 

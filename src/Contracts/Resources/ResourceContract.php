@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\Contracts\Resources;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use MoonShine\Actions\Action;
 use MoonShine\Actions\MassActions;

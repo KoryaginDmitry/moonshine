@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Traits;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 trait WithStorage
 {
@@ -40,8 +41,7 @@ trait WithStorage
 
     public function getDir(): string
     {
-        return str($this->dir)
-            ->trim('/')
-            ->value();
+        return Str::of($this->dir)
+            ->trim('/');
     }
 }

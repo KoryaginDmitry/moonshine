@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Fields;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use MoonShine\Contracts\Fields\Fileable;
 use MoonShine\Contracts\Fields\HasFields;
@@ -39,10 +40,12 @@ final class Fields extends FormElements
                 );
             }
 
-            if ($field instanceof HasFields
+            if (
+                $field instanceof HasFields
                 && $field->hasRelationship()
                 && $field->isNowOnForm()
-                && ! $parent->isResourceModeField()) {
+                && ! $parent->isResourceModeField()
+            ) {
                 return NoInput::make(
                     $field->label(),
                     $field->field(),
@@ -51,7 +54,7 @@ final class Fields extends FormElements
             }
 
             return $field->setName(
-                (string) str($parent->name())
+                (string) Str::of($parent->name())
                     ->when(
                         $parent->hasFields(),
                         fn (Stringable $s): Stringable => $s->append(

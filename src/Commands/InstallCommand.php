@@ -20,7 +20,7 @@ class InstallCommand extends MoonShineCommand
      */
     public function handle(): void
     {
-        $this->components->info('MoonShine installation ...');
+        $this->info('MoonShine installation ...');
 
         $this->initVendorPublish();
         $this->initStorage();
@@ -29,23 +29,16 @@ class InstallCommand extends MoonShineCommand
         $this->initDashboard();
         $this->initMigrations();
 
-        $this->components->info('Installation completed');
+        $this->info('Installation completed');
 
         if (! app()->runningUnitTests()) {
             $this->choice('Can you quickly star our GitHub repository? 🙏🏻', [
                 'yes',
                 'no',
             ], 'yes');
-
-            $this->components->bulletList([
-                'Star or contribute to MoonShine: https://github.com/moonshine-software/moonshine',
-                'MoonShine Documentation: https://moonshine.cutcode.dev',
-                'CutCode: https://cutcode.dev',
-            ]);
         }
 
-        $this->components->task('');
-        $this->components->info("Now run 'php artisan moonshine:user'");
+        $this->info("Now run 'php artisan moonshine:user'");
     }
 
     protected function initVendorPublish(): void
@@ -54,15 +47,11 @@ class InstallCommand extends MoonShineCommand
             '--provider' => MoonShineServiceProvider::class,
             '--force' => true,
         ]);
-
-        $this->components->task('Vendor published');
     }
 
     protected function initStorage(): void
     {
         Artisan::call('storage:link');
-
-        $this->components->task('Storage link created');
     }
 
     /**
@@ -81,8 +70,6 @@ class InstallCommand extends MoonShineCommand
         if (! app()->runningUnitTests()) {
             $this->registerServiceProvider();
         }
-
-        $this->components->task('Service Provider created');
     }
 
     protected function registerServiceProvider(): void
@@ -96,14 +83,12 @@ class InstallCommand extends MoonShineCommand
     protected function initDirectories(): void
     {
         if (is_dir($this->getDirectory())) {
-            $this->components->warn(
+            $this->warn(
                 "{$this->getDirectory()} directory already exists!"
             );
         }
 
         $this->makeDir($this->getDirectory() . '/Resources');
-
-        $this->components->task('Resources directory created');
     }
 
     /**
@@ -114,18 +99,12 @@ class InstallCommand extends MoonShineCommand
         $this->copyStub('Dashboard', $this->getDirectory() . '/Dashboard.php', [
             '{namespace}' => MoonShine::namespace(),
         ]);
-
-        $this->components->task('Dashboard created');
     }
 
     protected function initMigrations(): void
     {
         if (config('moonshine.use_migrations', true)) {
             Artisan::call('migrate');
-
-            $this->components->task('Tables migrated');
-        } else {
-            $this->components->task('Installed without default migrations');
         }
     }
 }

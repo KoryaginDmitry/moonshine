@@ -7,6 +7,7 @@ namespace MoonShine\Fields;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Fields\HasFields;
 use MoonShine\Contracts\Fields\HasPivot;
 use MoonShine\Contracts\Fields\Relationships\HasAsyncSearch;
@@ -76,7 +77,7 @@ class BelongsToMany extends Select implements
     {
         $this->makeTree($this->treePerformData($data));
 
-        $this->treeHtml = (string) str($this->treeHtml())->wrap(
+        $this->treeHtml = (string) Str::of($this->treeHtml())->wrap(
             "<ul class='tree-list'>",
             "</ul>"
         );
@@ -104,7 +105,7 @@ class BelongsToMany extends Select implements
                     ]
                 );
 
-                $this->treeHtml .= str($element)->wrap(
+                $this->treeHtml .= Str::of($element)->wrap(
                     "<li style='margin-left: " . ($offset * 30) . "px'>",
                     "</li>"
                 );

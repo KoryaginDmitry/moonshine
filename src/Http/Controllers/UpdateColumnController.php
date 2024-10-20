@@ -25,7 +25,6 @@ class UpdateColumnController extends BaseController
             );
         } catch (ResourceException $e) {
             throw_if(! app()->isProduction(), $e);
-            report_if(app()->isProduction(), $e);
 
             return response($e->getMessage());
         }

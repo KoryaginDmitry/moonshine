@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace MoonShine\QueryTags;
 
 use Closure;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use MoonShine\Traits\HasCanSee;
 use MoonShine\Traits\Makeable;
 use MoonShine\Traits\WithIcon;
@@ -33,7 +34,7 @@ final class QueryTag
 
     public function uri(): string
     {
-        return str($this->label())->slug()->value();
+        return Str::of($this->label())->slug();
     }
 
     public function builder(Builder $builder): Builder

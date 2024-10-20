@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Traits\Fields;
 
 use Closure;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use MoonShine\MoonShineRequest;
 
 trait WithAsyncSearch
@@ -77,5 +77,4 @@ trait WithAsyncSearch
 
         return $this;
     }
-
 }

@@ -54,10 +54,12 @@ class LoginFormRequest extends MoonShineRequest
             ),
         ];
 
-        if (! MoonShineAuth::guard()->attempt(
-            $credentials,
-            $this->boolean('remember')
-        )) {
+        if (
+            ! MoonShineAuth::guard()->attempt(
+                $credentials,
+                $this->boolean('remember')
+            )
+        ) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -100,7 +102,7 @@ class LoginFormRequest extends MoonShineRequest
     public function throttleKey(): string
     {
         return Str::transliterate(
-            str($this->input('username') . '|' . $this->ip())
+            Str::of($this->input('username') . '|' . $this->ip())
                 ->lower()
         );
     }

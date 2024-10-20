@@ -6,6 +6,7 @@ namespace MoonShine\Actions;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Exceptions\ActionException;
 use MoonShine\Jobs\ExportActionJob;
@@ -136,15 +137,14 @@ class ExportAction extends Action
 
         $fastExcel = new FastExcel($data);
 
-        if (str($path)->contains('.csv')) {
+        if (Str::of($path)->contains('.csv')) {
             $fastExcel->configureCsv($delimiter);
         }
 
         $result = $fastExcel->export($path);
 
-        $url = str($path)
-            ->remove(Storage::disk($disk)->path($dir))
-            ->value();
+        $url = Str::of($path)
+            ->remove(Storage::disk($disk)->path($dir));
 
         MoonShineNotification::send(
             trans('moonshine::ui.resource.export.exported'),

@@ -6,6 +6,7 @@ namespace MoonShine\Fields;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class MorphTo extends BelongsTo
 {
@@ -62,7 +63,7 @@ class MorphTo extends BelongsTo
     public function requestTypeValue(Model $item): string
     {
         return request(
-            (string) str($this->nameDot())->replace(
+            (string) Str::of($this->nameDot())->replace(
                 $this->field(),
                 $this->getMorphType($item)
             ),
@@ -90,10 +91,9 @@ class MorphTo extends BelongsTo
 
     public function indexViewValue(Model $item, bool $container = true): string
     {
-        return str($item->{$this->getMorphType($item)})
+        return Str::of($item->{$this->getMorphType($item)})
             ->append('(')
             ->append($item->{$this->getMorphKey($item)})
-            ->append(')')
-            ->value();
+            ->append(')');
     }
 }

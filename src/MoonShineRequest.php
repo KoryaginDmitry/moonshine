@@ -33,7 +33,7 @@ class MoonShineRequest extends FormRequest
 
     public function hasResource(): bool
     {
-        return str($this->url())->contains('resource/');
+        return \Illuminate\Support\Str::contains($this->url(), 'resource/');
     }
 
     public function getResource(): Resource

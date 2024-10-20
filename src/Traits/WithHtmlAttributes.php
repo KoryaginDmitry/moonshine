@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 use MoonShine\Helpers\Condition;
 
@@ -32,7 +33,7 @@ trait WithHtmlAttributes
     {
         $resolveAttributes = collect($this->attributes)->mapWithKeys(
             function ($attr) {
-                $property = (string) str($attr)->camel();
+                $property = (string) Str::of($attr)->camel();
 
                 return isset($this->{$property}) ? [$attr => $this->{$property}]
                     : [];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Commands;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Str;
 use MoonShine\MoonShine;
 
 class ResourceCommand extends MoonShineCommand
@@ -26,7 +27,7 @@ class ResourceCommand extends MoonShineCommand
      */
     public function createResource(): void
     {
-        $name = str($this->argument('name') ?? $this->ask('Name'));
+        $name = Str::of($this->argument('name') ?? $this->ask('Name'));
         $id = null;
 
         if ($this->option('singleton')) {
@@ -35,13 +36,12 @@ class ResourceCommand extends MoonShineCommand
         }
 
         $name = $name->ucfirst()
-            ->replace(['resource', 'Resource'], '')
-            ->value();
+            ->replace(['resource', 'Resource'], '');
 
         $model = $this->qualifyModel($this->option('model') ?? $name);
         $title = $this->option('title') ??
             ($this->option('singleton') ? $name
-                : str($name)->singular()->plural()->value());
+                : Str::of($name)->singular()->plural());
 
         $resource = $this->getDirectory() . "/Resources/{$name}Resource.php";
 
@@ -58,13 +58,13 @@ class ResourceCommand extends MoonShineCommand
             'Dummy' => $name,
         ]);
 
-        $this->components->info(
+        $this->info(
             "{$name}Resource file was created: " . str_replace(
                 base_path(),
                 '',
                 $resource
             )
         );
-        $this->components->info('Now register resource in menu');
+        $this->info('Now register resource in menu');
     }
 }

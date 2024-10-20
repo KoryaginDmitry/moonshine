@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace MoonShine\Dashboard;
 
 use Closure;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use MoonShine\Resources\Resource;
 use MoonShine\Traits\WithUniqueId;
 use Throwable;
@@ -60,7 +61,7 @@ final class ResourcePreview extends DashboardItem
 
     public function id(string $index = null): string
     {
-        return str($this->resource()->routeNameAlias())
+        return Str::of($this->resource()->routeNameAlias())
             ->prepend('resource_preview_')
             ->slug('_');
     }

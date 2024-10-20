@@ -7,6 +7,7 @@ namespace MoonShine\Fields;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Illuminate\Support\Traits\Conditionable;
 use MoonShine\Contracts\Fields\HasAssets;
@@ -86,29 +87,31 @@ abstract class FormElement implements ResourceRenderable, HasAssets
         string $field = null,
         Closure|ResourceContract|string|null $resource = null
     ) {
-        $this->setLabel(trim($label ?? (string) str($this->label)->ucfirst()));
+        $this->setLabel(trim($label ?? (string) Str::of($this->label)->ucfirst()));
         $this->setField(
-            trim($field ?? (string) str($this->label)->lower()->snake())
+            trim($field ?? (string) Str::of($this->label)->lower()->snake())
         );
 
         if ($this->hasRelationship()) {
-            $this->setField($field ?? (string) str($this->label)->camel());
+            $this->setField($field ?? (string) Str::of($this->label)->camel());
 
-            if ($this->belongToOne() && ! str($this->field())->contains(
-                '_id'
-            )) {
+            if (
+                $this->belongToOne() && ! Str::of($this->field())->contains(
+                    '_id'
+                )
+            ) {
                 $this->setField(
-                    (string) str($this->field())
+                    (string) Str::of($this->field())
                         ->append('_id')
                         ->snake()
                 );
             }
 
-            $this->setRelation($field ?? (string) str($this->label)->camel());
+            $this->setRelation($field ?? (string) Str::of($this->label)->camel());
 
-            if (str($this->relation())->contains('_id')) {
+            if (Str::of($this->relation())->contains('_id')) {
                 $this->setRelation(
-                    (string) str($this->relation())
+                    (string) Str::of($this->relation())
                         ->remove('_id')
                         ->camel()
                 );
@@ -227,11 +230,10 @@ abstract class FormElement implements ResourceRenderable, HasAssets
         }
 
         return MoonShine::getResourceFromUriKey(
-            str($this->relation())
+            Str::of($this->relation())
                 ->singular()
                 ->append('Resource')
                 ->kebab()
-                ->value()
         );
     }
 
@@ -292,7 +294,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
             return $this->id;
         }
 
-        return (string) str($this->name ?? $this->name())
+        return (string) Str::of($this->name ?? $this->name())
             ->replace(['[', ']'], '_')
             ->replaceMatches('/\${index\d+}/', '')
             ->replaceMatches('/_{2,}/', '_')
@@ -315,7 +317,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
             return $this->name;
         }
 
-        return (string) str($this->field())
+        return (string) Str::of($this->field())
             ->when(
                 ! is_null($wrap),
                 fn (Stringable $str): Stringable => $str->wrap("{$wrap}[", "]")
@@ -342,7 +344,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
 
     public function setId(string $id): static
     {
-        $this->id = (string) str($id)->remove(['[', ']'])->snake();
+        $this->id = (string) Str::of($id)->remove(['[', ']'])->snake();
 
         return $this;
     }
@@ -407,7 +409,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
 
     public function requestValue(string|int|null $index = null): mixed
     {
-        $nameDot = str(
+        $nameDot = Str::of(
             $this->isXModelField() ? $this->field() : $this->nameDot()
         )
             ->when(
@@ -430,7 +432,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
 
     protected function nameDot(): string
     {
-        $name = (string) str($this->name())->replace('[]', '');
+        $name = (string) Str::of($this->name())->replace('[]', '');
 
         parse_str($name, $array);
 
@@ -438,7 +440,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
 
         return $result->isEmpty()
             ? $name
-            : (string) str($result->keys()->first());
+            : (string) Str::of($result->keys()->first());
     }
 
     public function parentRequestValueKey(): ?string

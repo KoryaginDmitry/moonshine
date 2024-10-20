@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace MoonShine\Fields;
 
 use Illuminate\Database\Eloquent\Model;
+use JsonException;
 use MoonShine\Contracts\Fields\DefaultValueTypes\DefaultCanBeEnum;
+use UnitEnum;
 
 class Enum extends Select implements DefaultCanBeEnum
 {
+    /**
+     * @throws JsonException
+     */
     public function indexViewValue(Model $item, bool $container = true): string
     {
         $value = $item->{$this->field()};

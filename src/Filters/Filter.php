@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Filters;
 
 use Closure;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use MoonShine\Contracts\Fields\HasFormViewValue;
 use MoonShine\Fields\FormElement;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MoonShine\Filters;
 
-use Illuminate\Contracts\Database\Query\Builder;
 use MoonShine\Contracts\Fields\DefaultValueTypes\DefaultMustBeNull;
 use MoonShine\Contracts\Fields\Relationships\HasRelatedValues;
 use MoonShine\Contracts\Fields\Relationships\HasRelationship;

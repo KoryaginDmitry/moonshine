@@ -34,9 +34,9 @@ class UserCommand extends MoonShineCommand
                 ) => Hash::make($password),
             ]);
 
-            $this->components->info('User is created');
+            $this->info('User is created');
         } else {
-            $this->components->error('All params is required');
+            $this->error('All params is required');
         }
     }
 }

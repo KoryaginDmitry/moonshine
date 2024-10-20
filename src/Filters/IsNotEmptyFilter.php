@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\Filters;
 
-use Illuminate\Contracts\Database\Query\Builder;
+
+use Illuminate\Database\Eloquent\Builder;
 
 class IsNotEmptyFilter extends SwitchBooleanFilter
 {

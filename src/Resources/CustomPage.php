@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Resources;
 
 use Closure;
+use Illuminate\Support\Str;
 use MoonShine\Traits\Makeable;
 use MoonShine\Traits\WithLabel;
 
@@ -92,7 +93,7 @@ final class CustomPage
     public function url(): string
     {
         return route(
-            (string) str('moonshine')
+            (string) Str::of('moonshine')
                 ->append('.')
                 ->append('custom_page'),
             $this->alias

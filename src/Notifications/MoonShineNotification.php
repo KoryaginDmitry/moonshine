@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\Notifications;
 
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Notification;
 use MoonShine\MoonShineAuth;
 

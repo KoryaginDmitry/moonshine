@@ -79,7 +79,6 @@ class CrudController extends BaseController
             );
         } catch (Throwable $e) {
             throw_if(! app()->isProduction(), $e);
-            report_if(app()->isProduction(), $e);
 
             return view('moonshine::components.alert', [
                 'type' => 'error',
@@ -205,7 +204,6 @@ class CrudController extends BaseController
                 $resource->save($item);
             } catch (ResourceException $e) {
                 throw_if(! app()->isProduction(), $e);
-                report_if(app()->isProduction(), $e);
 
                 MoonShineUI::toast(
                     __('moonshine::ui.saved_error'),
