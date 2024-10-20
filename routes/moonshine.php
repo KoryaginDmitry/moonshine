@@ -22,7 +22,7 @@ Route::prefix(config('moonshine.route.prefix', ''))
             Route::get('/', DashboardController::class)->name('index');
             Route::post('/attachments', AttachmentController::class)->name('attachments');
 
-            Route::get('/search/relations', (new SearchController())->relations(...))
+            Route::get('/search/relations', [SearchController::class, 'relations'])
                 ->name('search.relations');
 
             Route::controller(NotificationController::class)
@@ -56,12 +56,12 @@ Route::prefix(config('moonshine.route.prefix', ''))
                     Route::get('/{driver}/callback', 'callback')->name('callback');
                 });
 
-            Route::post('/profile', (new ProfileController())->store(...))
+            Route::post('/profile', [ProfileController::class, 'store'])
                 ->middleware('auth.moonshine')
                 ->name('profile.store');
         }
 
-        Route::fallback(static function (): never {
+        Route::fallback(static function () {
             $handler = config(
                 'moonshine.route.notFoundHandler',
                 MoonShineNotFoundException::class
