@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\Commands;
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Artisan;
-use MoonShine\MoonShine;
 use MoonShine\Providers\MoonShineServiceProvider;
 
 class InstallCommand extends MoonShineCommand
@@ -15,9 +13,6 @@ class InstallCommand extends MoonShineCommand
 
     protected $description = 'Install the moonshine package';
 
-    /**
-     * @throws FileNotFoundException
-     */
     public function handle(): void
     {
         $this->info('MoonShine installation ...');
@@ -26,7 +21,6 @@ class InstallCommand extends MoonShineCommand
         $this->initStorage();
         $this->initServiceProvider();
         $this->initDirectories();
-        $this->initDashboard();
         $this->initMigrations();
 
         $this->info('Installation completed');
@@ -54,18 +48,10 @@ class InstallCommand extends MoonShineCommand
         Artisan::call('storage:link');
     }
 
-    /**
-     * @throws FileNotFoundException
-     */
     protected function initServiceProvider(): void
     {
         $this->comment('Publishing MoonShine Service Provider...');
         Artisan::call('vendor:publish', ['--tag' => 'moonshine-provider']);
-
-        $this->copyStub(
-            'MoonShineServiceProvider',
-            app_path('Providers/MoonShineServiceProvider.php')
-        );
 
         if (! app()->runningUnitTests()) {
             $this->registerServiceProvider();
@@ -74,10 +60,6 @@ class InstallCommand extends MoonShineCommand
 
     protected function registerServiceProvider(): void
     {
-        $this->installServiceProviderAfter(
-            'RouteServiceProvider',
-            'MoonShineServiceProvider'
-        );
     }
 
     protected function initDirectories(): void
@@ -87,18 +69,6 @@ class InstallCommand extends MoonShineCommand
                 "{$this->getDirectory()} directory already exists!"
             );
         }
-
-        $this->makeDir($this->getDirectory() . '/Resources');
-    }
-
-    /**
-     * @throws FileNotFoundException
-     */
-    protected function initDashboard(): void
-    {
-        $this->copyStub('Dashboard', $this->getDirectory() . '/Dashboard.php', [
-            '{namespace}' => MoonShine::namespace(),
-        ]);
     }
 
     protected function initMigrations(): void
