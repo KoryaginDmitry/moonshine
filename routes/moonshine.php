@@ -25,12 +25,11 @@ Route::prefix(config('moonshine.route.prefix', ''))
             Route::get('/search/relations', [SearchController::class, 'relations'])
                 ->name('search.relations');
 
-            Route::controller(NotificationController::class)
-                ->prefix('notifications')
+            Route::prefix('notifications')
                 ->as('notifications.')
                 ->group(static function (): void {
-                    Route::get('/', 'readAll')->name('readAll');
-                    Route::get('/{notification}', 'read')->name('read');
+                    Route::get('/', [NotificationController::class, 'readAll'])->name('readAll');
+                    Route::get('/{notification}', [NotificationController::class, 'read'])->name('read');
                 });
 
 
@@ -41,19 +40,15 @@ Route::prefix(config('moonshine.route.prefix', ''))
         });
 
         if (config('moonshine.auth.enable', true)) {
-            Route::controller(AuthenticateController::class)
-                ->group(static function (): void {
-                    Route::get('/login', 'login')->name('login');
-                    Route::post('/authenticate', 'authenticate')->name('authenticate');
-                    Route::get('/logout', 'logout')->name('logout');
-                });
+            Route::get('/login', [AuthenticateController::class, 'login'])->name('login');
+            Route::post('/authenticate', [AuthenticateController::class, 'authenticate'])->name('authenticate');
+            Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
 
-            Route::controller(SocialiteController::class)
-                ->prefix('socialite')
+            Route::prefix('socialite')
                 ->as('socialite.')
                 ->group(static function (): void {
-                    Route::get('/{driver}/redirect', 'redirect')->name('redirect');
-                    Route::get('/{driver}/callback', 'callback')->name('callback');
+                    Route::get('/{driver}/redirect', [SocialiteController::class, 'redirect'])->name('redirect');
+                    Route::get('/{driver}/callback', [SocialiteController::class, 'callback'])->name('callback');
                 });
 
             Route::post('/profile', [ProfileController::class, 'store'])

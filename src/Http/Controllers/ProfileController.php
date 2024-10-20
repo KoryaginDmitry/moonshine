@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MoonShine\Http\Controllers;
 
-use function back;
-
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
