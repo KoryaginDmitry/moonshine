@@ -1,0 +1,11 @@
+<x-moonshine::column
+    :colSpan="$element->columnSpanValue()"
+    :adaptiveColSpan="$element->adaptiveColumnSpanValue()"
+>
+    <x-moonshine::resource-renderable
+        :components="$element->getFields()"
+        :item="$item"
+        :resource="$resource"
+        :container="true"
+    />
+</x-moonshine::column>

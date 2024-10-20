@@ -1,0 +1,9 @@
+<x-moonshine::box
+    :title="$element->label()"
+>
+    <x-moonshine::resource-renderable
+        :components="$element->getFields()"
+        :item="$item"
+        :resource="$resource"
+    />
+</x-moonshine::box>

@@ -1,0 +1,39 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  moonshine-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: xdebug
+      - uses: actions/checkout@v3
+
+      - name: Set up MySQL
+        env:
+          DB_USERNAME: root
+          DB_PASSWORD: root
+          DB_DATABASE: moonshine
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USERNAME }} -p${{ env.DB_PASSWORD }}
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Execute tests via PEST(PHPUnit)
+        env:
+          DB_PASSWORD: root
+        run: ./vendor/bin/pest
