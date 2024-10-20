@@ -21,7 +21,7 @@ class DashboardBlock
 
     protected array $items = [];
 
-    final public function __construct(array $items = [], string $label = '')
+    public function __construct(array $items = [], string $label = '')
     {
         $this->setItems($items);
         $this->setLabel($label);

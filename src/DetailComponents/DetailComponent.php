@@ -22,7 +22,7 @@ abstract class DetailComponent implements ResourceRenderable
     use WithLabel;
     use WithUniqueId;
 
-    final public function __construct(
+    public function __construct(
         string $label
     ) {
         $this->setLabel($label);
