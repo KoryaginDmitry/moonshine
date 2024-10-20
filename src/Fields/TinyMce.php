@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Fields;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 final class TinyMce extends Textarea
 {
@@ -96,9 +97,9 @@ final class TinyMce extends Textarea
 
     public function formViewValue(Model $item): string
     {
-        return str(parent::formViewValue($item))->replace(
+        return (string) Str::of(parent::formViewValue($item))->replace(
             ['&amp;', '&lt;', '&gt;', '&nbsp;', '&quot;'],
             ['&amp;amp;', '&amp;lt;', '&amp;gt;', '&amp;nbsp;', '&amp;quot;']
-        )->value();
+        );
     }
 }

@@ -17,7 +17,7 @@ class AuthenticateController extends BaseController
     public function login(): View|RedirectResponse
     {
         if (MoonShineAuth::guard()->check()) {
-            return to_route('moonshine.index');
+            return redirect()->route('moonshine.index');
         }
 
         return view('moonshine::auth.login');
@@ -41,6 +41,6 @@ class AuthenticateController extends BaseController
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return to_route('moonshine.login');
+        return redirect()->route('moonshine.login');
     }
 }

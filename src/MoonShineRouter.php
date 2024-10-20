@@ -20,7 +20,7 @@ final class MoonShineRouter
 
     public static function uriKey(string $class): string
     {
-        return Str::of(class_basename($class))
+        return (string) Str::of(class_basename($class))
             ->kebab();
     }
 }

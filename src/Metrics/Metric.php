@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoonShine\Metrics;
 
+use Illuminate\Support\Str;
 use MoonShine\Contracts\Fields\HasAssets;
 use MoonShine\Contracts\ResourceRenderable;
 use MoonShine\Traits\Makeable;
@@ -33,7 +34,7 @@ abstract class Metric implements ResourceRenderable, HasAssets
 
     public function id(string $index = null): string
     {
-        return (string) str($this->label())
+        return (string) Str::of($this->label())
             ->slug('_')
             ->when(! is_null($index), fn ($str) => $str->append('_' . $index));
     }

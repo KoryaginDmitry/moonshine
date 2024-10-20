@@ -17,13 +17,12 @@ abstract class SingletonResource extends Resource
     public function resolveRoutes(): void
     {
         Route::prefix('resource')->group(function (): void {
-            Route::controller(ActionController::class)
-                ->prefix($this->uriKey())
+            Route::prefix($this->uriKey())
                 ->as("{$this->routeNameAlias()}.actions.")
                 ->group(function (): void {
                     Route::get(
                         "form/{" . $this->routeParam() . "}/{index}",
-                        'form'
+                        [ActionController::class, 'form']
                     )
                         ->name('form');
                 });

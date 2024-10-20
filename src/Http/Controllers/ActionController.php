@@ -6,6 +6,7 @@ namespace MoonShine\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 use MoonShine\Http\Requests\Resources\EditFormRequest;
 use MoonShine\Http\Requests\Resources\ViewAnyFormRequest;
 use MoonShine\MoonShineUI;
@@ -31,6 +32,9 @@ final class ActionController extends BaseController
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function item(ViewAnyFormRequest $request): RedirectResponse
     {
         abort_if(
@@ -62,6 +66,9 @@ final class ActionController extends BaseController
         return $redirectRoute;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function form(EditFormRequest $request): RedirectResponse
     {
         abort_if(
@@ -93,6 +100,9 @@ final class ActionController extends BaseController
         return $redirectRoute;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function bulk(ViewAnyFormRequest $request): RedirectResponse
     {
         $redirectRoute = $request->redirectRoute(
@@ -112,7 +122,7 @@ final class ActionController extends BaseController
             $items = $request->getResource()->getModel()
                 ->newModelQuery()
                 ->findMany(
-                    request()->str('ids')
+                    Str::of(request()->get('ids'))
                         ->explode(';')
                         ->filter()
                         ->toArray()

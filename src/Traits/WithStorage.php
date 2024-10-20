@@ -41,7 +41,7 @@ trait WithStorage
 
     public function getDir(): string
     {
-        return Str::of($this->dir)
+        return (string) Str::of($this->dir)
             ->trim('/');
     }
 }

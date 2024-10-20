@@ -23,20 +23,19 @@ trait ResourceCrudRouter
     public function resolveRoutes(): void
     {
         Route::prefix('resource')->group(function (): void {
-            Route::controller(ActionController::class)
-                ->prefix($this->uriKey())
+            Route::prefix($this->uriKey())
                 ->as("{$this->routeNameAlias()}.actions.")
                 ->group(function (): void {
-                    Route::any('action', 'index')->name('index');
+                    Route::any('action', [ActionController::class, 'index'])->name('index');
                     Route::get(
                         "form/{" . $this->routeParam() . "}/{index}",
-                        'form'
+                        [ActionController::class, 'form']
                     )->name('form');
                     Route::get(
                         "item/{" . $this->routeParam() . "}/{index}",
-                        'item'
+                        [ActionController::class, 'item']
                     )->name('item');
-                    Route::post('bulk/{index}', 'bulk')->name('bulk');
+                    Route::post('bulk/{index}', [ActionController::class, 'bulk'])->name('bulk');
                 });
 
             Route::get(

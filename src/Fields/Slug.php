@@ -83,7 +83,7 @@ class Slug extends Text
     protected function checkUnique(Model $item, string $slug): bool
     {
         return ! DB::table($item->getTable())
-            ->whereNot($item->getKeyName(), $item->getKey())
+            ->where($item->getKeyName(), '!=', $item->getKey())
             ->where($this->field(), $slug)
             ->first();
     }

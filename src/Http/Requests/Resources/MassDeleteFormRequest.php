@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace MoonShine\Http\Requests\Resources;
 
+use Illuminate\Support\Str;
 use MoonShine\MoonShineRequest;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 final class MassDeleteFormRequest extends MoonShineRequest
 {
@@ -23,11 +26,14 @@ final class MassDeleteFormRequest extends MoonShineRequest
         ];
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'ids' => request()
-                ->str('ids')
+            'ids' => Str::of(request()->get('ids'))
                 ->explode(';')
                 ->filter()
                 ->toArray(),

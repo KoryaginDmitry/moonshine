@@ -61,7 +61,7 @@ final class ResourcePreview extends DashboardItem
 
     public function id(string $index = null): string
     {
-        return Str::of($this->resource()->routeNameAlias())
+        return (string) Str::of($this->resource()->routeNameAlias())
             ->prepend('resource_preview_')
             ->slug('_');
     }

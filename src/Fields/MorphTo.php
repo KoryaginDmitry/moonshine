@@ -91,7 +91,7 @@ class MorphTo extends BelongsTo
 
     public function indexViewValue(Model $item, bool $container = true): string
     {
-        return Str::of($item->{$this->getMorphType($item)})
+        return (string) Str::of($item->{$this->getMorphType($item)})
             ->append('(')
             ->append($item->{$this->getMorphKey($item)})
             ->append(')');

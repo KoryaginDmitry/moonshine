@@ -34,7 +34,7 @@ final class QueryTag
 
     public function uri(): string
     {
-        return Str::of($this->label())->slug();
+        return (string) Str::of($this->label())->slug();
     }
 
     public function builder(Builder $builder): Builder

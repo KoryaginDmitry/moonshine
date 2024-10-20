@@ -230,7 +230,7 @@ abstract class FormElement implements ResourceRenderable, HasAssets
         }
 
         return MoonShine::getResourceFromUriKey(
-            Str::of($this->relation())
+            (string) Str::of($this->relation())
                 ->singular()
                 ->append('Resource')
                 ->kebab()

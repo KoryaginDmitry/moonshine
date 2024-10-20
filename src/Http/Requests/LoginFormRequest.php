@@ -110,7 +110,7 @@ class LoginFormRequest extends MoonShineRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'username' => request()->str('username')
+            'username' => Str::of(request()->get('username'))
                 ->when(
                     config(
                         'moonshine.auth.fields.username',

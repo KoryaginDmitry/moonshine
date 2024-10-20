@@ -20,7 +20,7 @@ class IsNotEmptyFilter extends SwitchBooleanFilter
             ? $query->where(
                 fn (Builder $query): Builder => $query->whereNotNull(
                     $this->field()
-                )->orWhereNot($this->field(), '')->orWhereNot($this->field(), 0)
+                )->orWhere($this->field(), '!=', '')->orWhere($this->field(), '!=', 0)
             )
             : $query;
     }

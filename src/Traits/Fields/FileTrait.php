@@ -93,7 +93,7 @@ trait FileTrait
     {
         $dir = empty($this->getDir()) ? '' : $this->getDir() . '/';
 
-        return Str::of($value)->remove($dir)
+        return (string) Str::of($value)->remove($dir)
             ->prepend($dir);
     }
 
@@ -140,7 +140,7 @@ trait FileTrait
 
     public function hiddenOldValuesKey(): string
     {
-        return str('hidden_')
+        return Str::of('hidden_')
             ->when(
                 $this->parentRequestValueKey(),
                 fn (Stringable $str): Stringable => $str->append(
