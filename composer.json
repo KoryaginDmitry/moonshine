@@ -1,5 +1,5 @@
 {
-  "name": "moonshine/moonshine",
+  "name": "sellty/moonshine",
   "description": "Laravel administration panel",
   "keywords": ["laravel", "admin", "dashboard", "moonshine"],
   "type": "library",
@@ -23,15 +23,6 @@
     "rap2hpoutre/fast-excel": "^5.0",
     "lee-to/laravel-package-command": "^0.9.1"
   },
-  "require-dev": {
-    "pestphp/pest": "^2.0",
-    "mockery/mockery": "^1.5",
-    "orchestra/testbench": "^8.5",
-    "pestphp/pest-plugin-laravel": "^2.0",
-    "pestphp/pest-plugin-mock": "^2.0",
-    "rector/rector": "^0.16.0",
-    "nunomaduro/larastan": "^2.6"
-  },
   "autoload": {
     "psr-4": {
       "MoonShine\\": "src/"
@@ -46,9 +37,6 @@
   "suggest": {
     "laravel/socialite": "Required to use the Socialite",
     "unisharp/laravel-filemanager": "Required if you want tinymce file manager"
-  },
-  "conflict": {
-    "laravel/framework": "<9.37.0"
   },
   "scripts": {
     "analyse": "vendor/bin/phpstan analyse src --memory-limit=-1",
